@@ -4,11 +4,14 @@ const next = require('next')
 const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 3000
 const dev = process.env.NODE_DEV !== 'production' //true false
+const mongodbUri = process.env.MONGODB_URI;
 const nextApp = next({ dev })
 const handle = nextApp.getRequestHandler() //part of next config
 const mongoose = require('mongoose')
 
-const db = mongoose.connect(process.env.MONGODB_URI)
+console.log("MONGODB_URI:", mongodbUri);
+
+const db = mongoose.connect(mongodbUri)
 
 nextApp.prepare().then(() => {
     // express code here
