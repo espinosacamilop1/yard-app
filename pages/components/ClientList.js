@@ -20,7 +20,7 @@ function ClientList() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`/api/clients`); // Change this to the actual route
+                const response = await axios.get(`${apiURL}/api/clients`); // Change this to the actual route
                 const clients = response.data; // Assuming your API returns an array of clients
                 console.log(clients); // Do something with the clients data
                 setClients(clients)
@@ -75,7 +75,7 @@ function ClientList() {
           console.log(updatedClients)
       
           try {
-            const response = await axios.post(`/api/update-clients`, { clientsToUpdate: updatedClients });
+            const response = await axios.post(`${apiURL}/api/update-clients`, { clientsToUpdate: updatedClients });
             const updatedClientsData = response.data;
             console.log('Clients updated:', updatedClientsData);
             } catch (error) {
