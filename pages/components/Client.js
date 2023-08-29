@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const Client = ({_id, NOMBRE, DIRECCION, FRECUENCIA, nextDate, TELEFONO, PAGO }) => {
 
-  const apiURL = process.env.API_URL;
+  // const apiURL = process.env.API_URL;
   const [edit, setEdit] = useState(false)
   const [client, setClient] = useState({ _id, NOMBRE, DIRECCION, FRECUENCIA, nextDate, TELEFONO, PAGO});
 
@@ -121,7 +121,7 @@ const Client = ({_id, NOMBRE, DIRECCION, FRECUENCIA, nextDate, TELEFONO, PAGO })
 
 
                 try {
-                  const response = axios.post(`${apiURL}/api/edit-client`, { editedCLient: client });
+                  const response = axios.post(`/api/edit-client`, { editedCLient: client });
                   const updatedClientsData = response.data;
                   console.log('Clients edited:', updatedClientsData);
 
