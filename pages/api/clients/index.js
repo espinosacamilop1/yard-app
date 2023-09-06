@@ -2,11 +2,11 @@ import clientPromise from '<src>/lib/mongo'
 import { MongoClient } from 'mongodb';
 
 
+    const client = await clientPromise;
+    const db = await client.db("Clients");
 
 const handler = async (req, res) => {
 
-    const client = await clientPromise;
-    const db = await client.db("Clients");
     
     console.log(client)
     switch (req.method) {
