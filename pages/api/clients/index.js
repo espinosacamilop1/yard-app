@@ -13,7 +13,9 @@ const handler = async (req, res) => {
           break;
         case "GET":
           const allClients = await db.collection("clients").find({}).toArray();
-          res.json({ status: 200, data: allClients });
+          res.statusCode = 200
+          res.setHeader('Content-Type', 'application/json')
+          res.end(JSON.stringify({ status: 200, data: allClients }));
           break;
         default:
           res.setHeader("Allow", ["GET"])
