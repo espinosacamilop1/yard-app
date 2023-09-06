@@ -14,16 +14,22 @@ export default function ClientList() {
     // Fetch Client List
     const [clients, setClients] = useState([]); 
 
-    useEffect(() => {
+useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`https://main--yard-app.netlify.app/api/clients`); 
-                const clients = response.data.data; 
-                setClients(clients)
+                const response = await fetch(`/api/clients`);
+                
+                if (!response.ok) {
+                    throw new Error(`Error fetching clients: ${response.status} ${response.statusText}`);
+                }
+        
+                const clients = await response.json();
+                setClients(clients);
             } catch (error) {
                 console.error('Error fetching clients:', error);
             }
         };
+
 
         fetchData();
     }, []);
