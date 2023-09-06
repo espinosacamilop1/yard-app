@@ -4,7 +4,6 @@ import { Inter } from 'next/font/google'
 import styles from '<src>/styles/Home.module.css'
 import AdminDashboard from '../components/Dashboard';
 
-const inter = Inter({ subsets: ['latin'] })
 
 
 export default function Dashboard() {

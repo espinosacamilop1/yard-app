@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import ClientList from './ClientList'
+import ClientList from './ClientList.js'
 
 
 

@@ -5,11 +5,9 @@ function getUpcomingWeekFormatted() {
     // Calculate the number of days until the next Sunday
     const daysUntilNextSunday = currentDate.getDay();
 
-    // console.log(daysUntilNextSunday)
     // Calculate the date of the next Sunday
     const nextSundayDate = new Date(currentDate);
     nextSundayDate.setDate(currentDate.getDate() + 1);
-    // console.log(nextSundayDate.setDate(currentDate.getDate() + daysUntilNextSunday))
 
     // Calculate the dates for the upcoming week in YYYY-MM-DD format
     const upcomingWeekDatesFormatted = [];
@@ -44,7 +42,6 @@ function getWeekBeforeSunday() {
         currentDate.setDate(previousSunday.getDate() - i);
         weekDates.push(currentDate.toISOString().split('T')[0]);
     }
-    console.log(previousSunday)
 
     return weekDates;
 }

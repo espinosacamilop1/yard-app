@@ -121,9 +121,8 @@ const Client = ({_id, NOMBRE, DIRECCION, FRECUENCIA, nextDate, TELEFONO, PAGO })
 
 
                 try {
-                  const response = axios.post(`/api/edit-client`, { editedCLient: client });
+                  const response = axios.post(`/api/updateClient`, { editedClient: client });
                   const updatedClientsData = response.data;
-                  console.log('Clients edited:', updatedClientsData);
 
                 } catch (err) {
                   console.error('Error editing clients:', error);
