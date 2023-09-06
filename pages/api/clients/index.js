@@ -12,6 +12,9 @@ const handler = async (req, res) => {
           const allClients = await db.collection("clients").find({}).toArray();
           res.setHeader('Content-Type', 'application/json')
           res.end(JSON.stringify({ status: 200, data: allClients }));
+      } catch(error) {
+      console.error('Error updating clients:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
       }
   } else {
                 res.setHeader("Allow", ["GET"])
