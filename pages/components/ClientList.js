@@ -17,7 +17,7 @@ export default function ClientList() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`/api/clients`); 
+                const response = await axios.get(`https://main--yard-app.netlify.app/api/clients`); 
                 const clients = response.data.data; 
                 setClients(clients)
             } catch (error) {
