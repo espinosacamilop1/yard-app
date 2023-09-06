@@ -35,14 +35,6 @@ export default function ClientList() {
             setCheckedClients([...checkedClients, client]);
         }
     };
-
-    // const handleUpdateNextDate = (updatedClient) => {
-    //     setClients((prevClients) => {
-    //       return prevClients.map((client) =>
-    //         client._id === updatedClient._id ? { ...client, nextDate: updatedClient.nextDate } : client
-    //       );
-    //     });
-    //   };
       
       const handleSubmit = async (event) => {
           event.preventDefault();
