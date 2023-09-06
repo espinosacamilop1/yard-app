@@ -1,16 +1,24 @@
 import {MongoClient} from 'mongodb'
 
-const URL = process.env.MONGODB_URI
-const dbname = 'Clients'
+const URI = process.env.MONGODB_URI
 const options = {}
-let db = null;
 
-let client = new MongoClient(URL, options)
+if(!URI) throw new Error('Please add your Mongo URI to .env')
+console.log('this is URI: ', URI)
 
-client.connect()
+let client = new MongoClient(URI, options)
+let clientPromise
+
+if(process.env.NODE_DEV !== "production") {
+    if(!global._mongoClientPromise) {
+        global._mongoClientPromise = client.connect()
+    } else {
+        clientPromise = client.connect()
+    }
+}
 
 const handler = async (req, res) => {
-
+    const client = await clientPromise
     db = await client.db(dbname);
 
     switch (req.method) {
