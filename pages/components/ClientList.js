@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect} from 'react'
+import Client from './Client.js';
 import axios from 'axios';
-import Client from './Client';
-import { getWeekBeforeSunday, getUpcomingWeekFormatted, getClientNextDate } from '../../scripts/functions'
+import { getWeekBeforeSunday, getUpcomingWeekFormatted, getClientNextDate } from '../../scripts/functions.js'
 
-function ClientList() {
-    // const apiURL = process.env.API_URL;
-
+export default function ClientList() {
 
     const upcomingWeekDatesFormatted = getUpcomingWeekFormatted();
     const pastWeekDatesFormatted = getWeekBeforeSunday();
-    console.log(pastWeekDatesFormatted)
     const [component, setComponent] = useState("allClients"); //components to navigate
  
     const [checkedClients, setCheckedClients] = useState([]); 
@@ -20,9 +17,8 @@ function ClientList() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`/api/clients`); // Change this to the actual route
-                const clients = response.data; // Assuming your API returns an array of clients
-                console.log(clients); // Do something with the clients data
+                const response = await axios.get(`/api/clients`); 
+                const clients = response.data.data; 
                 setClients(clients)
             } catch (error) {
                 console.error('Error fetching clients:', error);
@@ -48,7 +44,6 @@ function ClientList() {
     //     });
     //   };
       
-      // Inside your component
       const handleSubmit = async (event) => {
           event.preventDefault();
       
@@ -69,26 +64,24 @@ function ClientList() {
                 default:
                     break;
             }
-            return checkedClient; // Return the modified checkedClient object
+            return checkedClient;
         });
         
-          console.log(updatedClients)
       
           try {
-            const response = await axios.post(`/api/update-clients`, { clientsToUpdate: updatedClients });
+            const response = await axios.post(`/api/updateClients`, { clientsToUpdate: updatedClients });
             const updatedClientsData = response.data;
-            console.log('Clients updated:', updatedClientsData);
+
+            setClients((prevClients) => {
+                return prevClients.map((client) => {
+                    const updatedClient = updatedClients.find((uClient) => uClient._id === client._id);
+                    return updatedClient ? updatedClient : client;
+                });
+            });
             } catch (error) {
                 console.error('Error updating clients:', error);
             }
-      };
-            
-      let total = clients.reduce((accumulator, client) => {
-        return accumulator + parseFloat(client.PAGO);
-      }, 0);
-      
-      console.log(total);
-      
+      };      
 
     if (component === 'allClients') {
 
@@ -147,7 +140,6 @@ function ClientList() {
 
                 <div>
                     <form onSubmit={handleSubmit}>
-                        {/* {clients.map((client) => console.log(client))} */}
                         {clients
                             .filter(client => pastWeekDatesFormatted.includes(client.nextDate))
                             .sort((a, b) => new Date(a.nextDate) - new Date(b.nextDate))
@@ -170,4 +162,3 @@ function ClientList() {
     }
 }
 
-export default ClientList
