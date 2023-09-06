@@ -4,7 +4,7 @@ import { MongoClient } from 'mongodb';
 const handler = async (req, res) => {
     const client = await clientPromise;
     const db = await client.db("Clients");
-    console.log('this is db: 'db);
+    console.log('this is db: ', db);
     switch (req.method) {
         case "POST":
           let bodyObject = JSON.parse(req.body);
