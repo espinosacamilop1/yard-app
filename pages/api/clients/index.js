@@ -1,26 +1,14 @@
-import {MongoClient} from 'mongodb'
+import clientPromise from '<src>/lib/mongo'
+import { MongoClient } from 'mongodb';
 
-const URI = process.env.MONGODB_URI
-const options = {}
 
-if(!URI) throw new Error('Please add your Mongo URI to .env')
-console.log('this is URI: ', URI)
-
-let client = new MongoClient(URI, options)
-let clientPromise
-
-if(process.env.NODE_DEV !== "production") {
-    if(!global._mongoClientPromise) {
-        global._mongoClientPromise = client.connect()
-    } else {
-        clientPromise = client.connect()
-    }
-}
 
 const handler = async (req, res) => {
-    const client = await clientPromise
-    db = await client.db(dbname);
 
+    const client = await clientPromise;
+    const db = await client.db("Clients");
+    
+    console.log(client)
     switch (req.method) {
         case "POST":
           let bodyObject = JSON.parse(req.body);
