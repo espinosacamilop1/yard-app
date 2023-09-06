@@ -1,10 +1,18 @@
-import clientPromise from '<src>/lib/mongo'
-import { MongoClient } from 'mongodb';
+import {MongoClient} from 'mongodb'
+
+const URL = process.env.MONGODB_URI
+const dbname = 'Clients'
+const options = {}
+let db = null;
+
+let client = new MongoClient(URL, options)
+
+client.connect()
 
 const handler = async (req, res) => {
-    const client = await clientPromise;
-    const db = await client.db("Clients");
-    console.log('this is db: ', db);
+
+    db = await client.db(dbname);
+
     switch (req.method) {
         case "POST":
           let bodyObject = JSON.parse(req.body);
