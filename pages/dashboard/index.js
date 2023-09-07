@@ -6,11 +6,10 @@ import AdminDashboard from '../components/Dashboard';
 
 
 
-export default function Dashboard() {
-
+export default function Dashboard({fetchedClients}) {
     return (
         <div>
-            <AdminDashboard/>
+            <AdminDashboard fetchedClients={{fetchedClients}}/>
         </div>
       );
 }
