@@ -3,13 +3,7 @@ import Client from './Client.js';
 import axios from 'axios';
 import { getWeekBeforeSunday, getUpcomingWeekFormatted, getClientNextDate } from '../../scripts/functions.js'
 
-export const getServerSideProps = async () => {
-  const res = await fetch('/api/clients')
-  const clients = await res.json();
-  return { props: { clients } }
-}
-
-export default function ClientList({clients}) {
+export default function ClientList() {
 
     const upcomingWeekDatesFormatted = getUpcomingWeekFormatted();
     const pastWeekDatesFormatted = getWeekBeforeSunday();
