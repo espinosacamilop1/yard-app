@@ -1,4 +1,4 @@
-import clientPromise from '<src>/lib/mongo'
+import clientPromise from '../../../lib/mongo/index'
 import { MongoClient } from 'mongodb';
 
 
