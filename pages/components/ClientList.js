@@ -2,9 +2,11 @@ import React, { useState, useEffect} from 'react'
 import Client from './Client.js';
 import axios from 'axios';
 import { getWeekBeforeSunday, getUpcomingWeekFormatted, getClientNextDate } from '../../scripts/functions.js'
+import { clientPromise } from '<src>/lib/mongo/index.js';
 
-export default function ClientList() {
 
+
+export default function ClientList({fetchedClients}) {
     const upcomingWeekDatesFormatted = getUpcomingWeekFormatted();
     const pastWeekDatesFormatted = getWeekBeforeSunday();
     const [component, setComponent] = useState("allClients"); //components to navigate
@@ -12,28 +14,7 @@ export default function ClientList() {
     const [checkedClients, setCheckedClients] = useState([]); 
 
     // Fetch Client List
-    const [clients, setClients] = useState([]); 
-
-useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`/api/clients`);
-                
-                if (!response.ok) {
-                    throw new Error(`Error fetching clients: ${response.status} ${response.statusText}`);
-                    console.log(`Error fetching clients: ${response.status} ${response.statusText}`)
-                }
-        
-                const clients = await response.json();
-                setClients(clients.data);
-            } catch (error) {
-                console.error('Error fetching clients:', error);
-            }
-        };
-
-
-        fetchData();
-    }, []);
+    const [clients, setClients] = useState(fetchedClients.fetchedClients); 
 
     const handleClientCheck = (client) => {
         if (checkedClients.includes(client)) {
@@ -42,14 +23,6 @@ useEffect(() => {
             setCheckedClients([...checkedClients, client]);
         }
     };
-
-    // const handleUpdateNextDate = (updatedClient) => {
-    //     setClients((prevClients) => {
-    //       return prevClients.map((client) =>
-    //         client._id === updatedClient._id ? { ...client, nextDate: updatedClient.nextDate } : client
-    //       );
-    //     });
-    //   };
       
       const handleSubmit = async (event) => {
           event.preventDefault();
@@ -169,3 +142,21 @@ useEffect(() => {
     }
 }
 
+export async function getServerSideProps() {
+    try {
+        const client = await clientPromise;
+        const db = client.db("Clients");
+
+        const clients = await db
+            .collection("clients")
+            .find({})
+            .toArray();
+
+        console.log('this is server',clients)
+        return {
+            props: { fetchedClients: JSON.parse(JSON.stringify(clients)) },
+        };
+    } catch (e) {
+        console.error(e);
+    }
+}
