@@ -1,15 +1,12 @@
 import React, {useState} from 'react'
 import ClientList from './ClientList.js'
 
-
-
-
-
-function AdminDashboard() {
+function AdminDashboard({ fetchedClients }) {
+  console.log(fetchedClients)
     return (
       <div>
       <h1>Dashboard</h1>
-        <ClientList />
+        <ClientList fetchedClients={fetchedClients} />
     </div>
     )
 }
