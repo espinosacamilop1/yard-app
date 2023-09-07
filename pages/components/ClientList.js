@@ -12,7 +12,7 @@ export default function ClientList() {
     const [checkedClients, setCheckedClients] = useState([]); 
 
     // Fetch Client List
-    const [clients, setClients] = useState({repo}); 
+    const [clients, setClients] = useState([]); 
 
 useEffect(() => {
         const fetchData = async () => {
