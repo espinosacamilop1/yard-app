@@ -3,7 +3,13 @@ import Client from './Client.js';
 import axios from 'axios';
 import { getWeekBeforeSunday, getUpcomingWeekFormatted, getClientNextDate } from '../../scripts/functions.js'
 
-export default function ClientList() {
+export const getServerSideProps = async () => {
+  const res = await fetch('/api/clients')
+  const clients = await res.json();
+  return { props: { clients } }
+}
+
+export default function ClientList({clients}) {
 
     const upcomingWeekDatesFormatted = getUpcomingWeekFormatted();
     const pastWeekDatesFormatted = getWeekBeforeSunday();
@@ -12,7 +18,7 @@ export default function ClientList() {
     const [checkedClients, setCheckedClients] = useState([]); 
 
     // Fetch Client List
-    const [clients, setClients] = useState([]); 
+    const [clients, setClients] = useState({repo}); 
 
 useEffect(() => {
         const fetchData = async () => {
@@ -21,10 +27,11 @@ useEffect(() => {
                 
                 if (!response.ok) {
                     throw new Error(`Error fetching clients: ${response.status} ${response.statusText}`);
+                    console.log(`Error fetching clients: ${response.status} ${response.statusText}`)
                 }
         
                 const clients = await response.json();
-                setClients(clients);
+                setClients(clients.data);
             } catch (error) {
                 console.error('Error fetching clients:', error);
             }
