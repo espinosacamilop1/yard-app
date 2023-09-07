@@ -15,7 +15,7 @@ const handler = async (req, res) => {
            .find({})
            .toArray();
 
-       res.json(movies);
+       res.json(clients);
    } catch (e) {
        console.error(e);
    }
