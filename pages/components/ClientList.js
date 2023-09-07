@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react'
 import Client from './Client.js';
 import axios from 'axios';
 import { getWeekBeforeSunday, getUpcomingWeekFormatted, getClientNextDate } from '../../scripts/functions.js'
-import { clientPromise } from '<src>/lib/mongo/index.js';
+import { clientPromise } from '../../../lib/mongo/index';
 
 
 
