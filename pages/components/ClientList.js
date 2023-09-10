@@ -2,11 +2,12 @@ import React, { useState, useEffect} from 'react'
 import Client from './Client.js';
 import axios from 'axios';
 import { getWeekBeforeSunday, getUpcomingWeekFormatted, getClientNextDate } from '../../scripts/functions.js'
-import { clientPromise } from '../../lib/mongo/index.js';
+import { clientPromise } from '../../lib/mongo';
 
 
 
 export default function ClientList({fetchedClients}) {
+
     const upcomingWeekDatesFormatted = getUpcomingWeekFormatted();
     const pastWeekDatesFormatted = getWeekBeforeSunday();
     const [component, setComponent] = useState("allClients"); //components to navigate
@@ -160,3 +161,5 @@ export async function getServerSideProps() {
         console.error(e);
     }
 }
+
+
